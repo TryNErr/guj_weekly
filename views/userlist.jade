@@ -1,0 +1,60 @@
+extends layout
+
+block content
+    h1.
+        User List
+    div
+        table.gradienttable
+            thead
+                tr
+                    th
+                        p Name
+                    th
+                        p Email
+                    th
+                        p Start
+                    th
+                        p End
+                    th
+                        p OneOff
+                    th
+                        p Phone
+            tbody
+                each item in userlist
+                    tr
+                        td
+                            p #{item.username}    
+                        td 
+                            p #{item.email}   
+                        td 
+                            p #{item.start}    
+                        td 
+                            p #{item.end} 
+                        td 
+                            p #{item.oneoff}
+                        td 
+                            p #{item.phone}
+
+    div
+        table.gradienttable
+            thead
+                tr
+                    th
+                        p Size
+                    th
+                        p Dimension
+                    th
+                        p Duration
+                    th
+                        p Price
+            tbody
+                each item in adlist
+                    tr
+                        td
+                            p #{item.size}    
+                        td 
+                            p #{item.dimensions}   
+                        td 
+                            p #{item.duration}    
+                        td 
+                            p #{item.price} 
