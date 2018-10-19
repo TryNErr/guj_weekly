@@ -5,4 +5,8 @@ block content
     form#formAddUser(name="adduser",method="post",action="/adduser")
         input#inputUserName(type="text", placeholder="username", name="username")
         input#inputUserEmail(type="text", placeholder="useremail", name="useremail")
+        input#inputUserPhone(type="text", placeholder="userphone", name="userphone")
+        input#inputUserStart(type="date", placeholder="userstart", name="userstart")
+        input#inputUserEnd(type="date", placeholder="userend", name="userend")
+        input#inputUserOneoff(type="checkbox", placeholder="useroneoff", name="useroneoff")
         button#btnSubmit(type="submit") submit

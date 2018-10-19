@@ -3,7 +3,35 @@ extends layout
 block content
     h1.
         User List
-    ul
-        each user, i in userlist
-            li
-                a(href="mailto:#{user.email}")= user.username
+    div
+        table.gradienttable
+            thead
+                tr
+                    th
+                        p Name
+                    th
+                        p Email
+                    th
+                        p Start
+                    th
+                        p End
+                    th
+                        p OneOff
+                    th
+                        p Phone
+            tbody
+                each item, i in userlist
+                    tr
+                        td
+                            p #{item.username}    
+                        td 
+                            p #{item.email}   
+                        td 
+                            p #{item.start}    
+                        td 
+                            p #{item.end} 
+                        td 
+                            p #{item.oneoff}
+                        td 
+                            p #{item.phone}
+

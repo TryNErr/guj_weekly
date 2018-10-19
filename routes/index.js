@@ -16,6 +16,7 @@ router.get('/userlist', function(req, res) {
     var db = req.db;
     var collection = db.get('usercollection');
     collection.find({},{},function(e,docs){
+        console.log(docs);
         res.render('userlist', {
             "userlist" : docs
         });
@@ -36,6 +37,10 @@ router.post('/adduser', function(req, res) {
     // Get our form values. These rely on the "name" attributes
     var userName = req.body.username;
     var userEmail = req.body.useremail;
+    var userStart = req.body.userstart;
+    var userEnd = req.body.userend;
+    var userOneoff = req.body.useroneoff;
+    var userPhone = req.body.userphone;
 
     // Set our collection
     var collection = db.get('usercollection');
@@ -43,7 +48,11 @@ router.post('/adduser', function(req, res) {
     // Submit to the DB
     collection.insert({
         "username" : userName,
-        "email" : userEmail
+        "email" : userEmail,
+        "start" : userStart,
+        "end" : userEnd,
+        "oneoff" : userOneoff,
+        "phone" : userPhone
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
