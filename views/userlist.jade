@@ -20,7 +20,7 @@ block content
                     th
                         p Phone
             tbody
-                each item, i in userlist
+                each item in userlist
                     tr
                         td
                             p #{item.username}    
@@ -35,3 +35,26 @@ block content
                         td 
                             p #{item.phone}
 
+    div
+        table.gradienttable
+            thead
+                tr
+                    th
+                        p Size
+                    th
+                        p Dimension
+                    th
+                        p Duration
+                    th
+                        p Price
+            tbody
+                each item in adlist
+                    tr
+                        td
+                            p #{item.size}    
+                        td 
+                            p #{item.dimensions}   
+                        td 
+                            p #{item.duration}    
+                        td 
+                            p #{item.price} 

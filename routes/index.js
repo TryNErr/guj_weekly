@@ -14,13 +14,24 @@ router.get('/helloworld', function(req, res) {
 /* GET Userlist page. */
 router.get('/userlist', function(req, res) {
     var db = req.db;
+    var doc1 = [];
     var collection = db.get('usercollection');
+    var doc2 = [];
+    var collection1 = db.get('adcollection');
     collection.find({},{},function(e,docs){
-        console.log(docs);
-        res.render('userlist', {
-            "userlist" : docs
+       doc1 = docs;
+        console.log(doc1);
+        collection1.find({},{},function(e,docs1){
+            doc2 = docs1;
+            console.log(doc2);
+            callresponse();
         });
-    });
+     });
+
+    console.log("doc1" + doc1);
+    function callresponse() {
+       res.render('userlist', {            "userlist" : doc1, "adlist" : doc2        });
+    }
 });
 
 /* GET New User page. */
