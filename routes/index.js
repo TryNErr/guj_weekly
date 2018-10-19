@@ -39,6 +39,32 @@ router.get('/newuser', function(req, res) {
     res.render('newuser', { title: 'Add New User' });
 });
 
+router.get('/newad', function(req, res) {
+    var db = req.db;
+    var doc1 = [];
+    var collection = db.get('usercollection');
+    var doc2 = [];
+    var collection1 = db.get('adcollection');
+    collection.find({},{},function(e,docs){
+       doc1 = docs;
+        console.log(doc1);
+        collection1.find({},{},function(e,docs1){
+            doc2 = docs1;
+            console.log(doc2);
+            callresponse();
+        });
+     });
+
+    console.log("doc1" + doc1);
+    function callresponse() {
+    res.render('newad', { title: 'Add New AD', "userlist" : doc1, "adlist" : doc2 });
+
+//       res.render('userlist', {            "userlist" : doc1, "adlist" : doc2        });
+    }
+
+});
+
+
 /* POST to Add User Service */
 router.post('/adduser', function(req, res) {
 

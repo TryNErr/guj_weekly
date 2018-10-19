@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1= title
+    form#formAddUser(name="addad",method="post",action="/addad")
+        select(name='User', size='1')
+            each item in userlist
+                option(value='#{item._id}') #{item.username} - #{item.email} 
+        select(name='Ad', size='1')
+            each item in adlist
+                option(value='#{item._id}') #{item.size} - #{item.duration} - $ #{item.price}
+            button#btnSubmit(type="submit") submit
