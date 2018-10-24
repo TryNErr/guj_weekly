@@ -6,13 +6,13 @@ block content
         p Select Advertiser
         select(name='user', size='1')
             each item in userlist
-                option(value='#{item._id}AAAAA#{item.username}') #{item.username} - #{item.email} 
+                option(value='#{item._id}') #{item.username} - #{item.email} 
         a(href="/newuser")
             button(type="button") Create New Advertiser
         p Select Ad Type    
         select(name='ad', size='1')
             each item in adlist
-                option(value='#{item._id}AAAAA#{item.size}') #{item.size} - #{item.duration} - $ #{item.price}
+                option(value='#{item._id}') #{item.size} - #{item.duration} - $ #{item.price}
         p   Start From:  
         input#inputUserStart(type="date", placeholder="userstart", name="userstart")
         p   End Date:
