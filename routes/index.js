@@ -20,15 +20,15 @@ router.get('/userlist', function(req, res) {
     var collection1 = db.get('adcollection');
     collection.find({},{},function(e,docs){
        doc1 = docs;
-        console.log(doc1);
+       // console.log(doc1);
         collection1.find({},{},function(e,docs1){
             doc2 = docs1;
-            console.log(doc2);
+         //   console.log(doc2);
             callresponse();
         });
      });
 
-    console.log("doc1" + doc1);
+   // console.log("doc1" + doc1);
     function callresponse() {
        res.render('userlist', {            "userlist" : doc1, "adlist" : doc2        });
     }
@@ -47,7 +47,7 @@ router.get('/newad', function(req, res) {
     var collection1 = db.get('adcollection');
     collection.find({},{},function(e,docs){
        doc1 = docs;
-        console.log(doc1);
+       // console.log(doc1);
         collection1.find({},{},function(e,docs1){
             doc2 = docs1;
             console.log(doc2);
@@ -55,7 +55,7 @@ router.get('/newad', function(req, res) {
         });
      });
 
-    console.log("doc1" + doc1);
+    //console.log("doc1" + doc1);
     function callresponse() {
     res.render('newad', { title: 'Add New AD', "userlist" : doc1, "adlist" : doc2 });
 
@@ -120,12 +120,17 @@ router.post('/addad', function(req, res) {
     var userOneoffDone = '';
     var userAltStart = '';
     // Set our collection
-    
+    console.log("useroneoff   "+ userOneoff);
+    console.log("userAlt    "+userAlt);
     if(userOneoff == "on")
-        userOneoffDone = 'NO';
+        userOneoffDone = getWeek(userStart);
+    else   
+        userOneoff = "off";
         
     if (userAlt == "on")
          userAltStart =getWeek(userStart)%2;
+    else
+        userAlt = "off";
     
     var collection = db.get('pubcollection');
 
@@ -150,7 +155,7 @@ router.post('/addad', function(req, res) {
             // If it worked, set the header so the address bar doesn't still say /adduser
             //res.location("userlist");
             // And forward to success page
-            res.redirect("index");
+            res.redirect("newad");
         }
     });
 });
@@ -181,9 +186,17 @@ router.get('/weeklyad', function(req, res) {
        doc1 = docs;
         collection1.find({},{},function(e,docs1){
             doc2 = docs1;
-            collection2.find({ $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}} ] },{},function(e,docs2){
+            var wk = parseInt(getWeek(new Date()));
+            var wkoddeven = parseInt(wk % 2);
+            console.log("Week" + wk);
+            collection2.find(
+                {$or:[
+                    { $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {oneoff :{ $ne : "on"}},{alternate :{ $ne : "on"}}  ] },
+                    { $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {oneoff :{ $eq : "on"}},{oneoffdone :{ $eq : 42}} ] },
+                    { $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {alternate :{ $eq : "on"}},{ altstart :{ $eq : wkoddeven}} ] }
+                ]},{},function(e,docs2){
                 doc3 = docs2;
-                console.log(doc3);
+                //console.log(doc3);
                 callresponse();
             });
         });
@@ -192,7 +205,7 @@ router.get('/weeklyad', function(req, res) {
     function callresponse() {
 //    res.render('userlist');
 
-       res.render('userlist', {            "userlist" : doc1, "adlist" : doc2        });
+       res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3        });
     }
 
 });

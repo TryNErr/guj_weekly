@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    h1.
+        Advertisement List
+    div
+        table.gradienttable
+            thead
+                tr
+                    th
+                        p Advertisement Type
+                    th
+                        p Advertiser Name
+                    th
+                        p Start - End
+                    th
+                        p OneOff
+                    th
+                        p Alternate
+            tbody
+                each item in publist
+                    tr
+                        td
+                            p #{item.addesc}    
+                        td 
+                            p #{item.username}   
+                        td 
+                            p #{item.start} - #{item.end}    
+                        td 
+                            p #{item.oneoff} - #{item.oneoffdone}    
+                        td 
+                            p #{item.alternate} - #{item.altstart} 
