@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    h1= title
+    h1= Week "#{week)"
     form#formAddUser(name="addad",method="post",action="/addad")
         p Select Advertiser
         select(name='user', size='1')

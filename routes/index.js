@@ -186,15 +186,17 @@ router.get('/weeklyad', function(req, res) {
        doc1 = docs;
         collection1.find({},{},function(e,docs1){
             doc2 = docs1;
-            var wk = parseInt(getWeek(new Date()));
-            var wkoddeven = parseInt(wk % 2);
+            var wk = Number(getWeek(new Date()));
+            var wkoddeven = Number(wk % 2);
             console.log("Week" + wk);
             collection2.find(
                 {$or:[
                     { $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {oneoff :{ $ne : "on"}},{alternate :{ $ne : "on"}}  ] },
-                    { $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {oneoff :{ $eq : "on"}},{oneoffdone :{ $eq : 42}} ] },
-                    { $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {alternate :{ $eq : "on"}},{ altstart :{ $eq : wkoddeven}} ] }
-                ]},{},function(e,docs2){
+                    { $and: [  {oneoff :{ $eq : "on"}},{oneoffdone :{ $eq : Number(getWeek(new Date())) }} ] },
+                    { $and: [ {end : { $gte : new Date()}}, {alternate :{ $eq : "on"}},{ altstart :{ $eq : Number((getWeek(new Date()))%2)}} ] }
+                ]}
+               /*$and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {oneoff :{ $eq : "on" }}, {oneoffdone : { $eq : Number(getWeek(new Date())) }} ] }*/
+                ,{},function(e,docs2){
                 doc3 = docs2;
                 //console.log(doc3);
                 callresponse();
@@ -205,7 +207,7 @@ router.get('/weeklyad', function(req, res) {
     function callresponse() {
 //    res.render('userlist');
 
-       res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3        });
+       res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3, 'week': getWeek(new Date())        });
     }
 
 });

@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1.
-        Advertisement List
+        Advertisement List - Week #{week)
     div
         table.gradienttable
             thead
@@ -19,6 +19,8 @@ block content
                         p Alternate
             tbody
                 each item in publist
+                    if (item.oneoff == 'on')
+                        .hello
                     tr
                         td
                             p #{item.addesc}    
