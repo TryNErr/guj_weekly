@@ -1,4 +1,5 @@
 var express = require('express');
+var nodemailer = require('nodemailer');
 var router = express.Router();
 
 /* GET home page. */
@@ -111,7 +112,9 @@ router.post('/addad', function(req, res) {
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var userName = req.body.user.split("AAAAA", 2);
+    console.log("USER " + req.body.user);
+    var userName = req.body.user.split("AAAAA", 3);
+    console.log("USERNAME " + userName);
     var userAd = req.body.ad.split("AAAAA",2);
     var userStart = new Date(req.body.userstart);
     var userEnd = new Date(req.body.userend);
@@ -119,6 +122,7 @@ router.post('/addad', function(req, res) {
     var userAlt = req.body.useralternate;
     var userOneoffDone = '';
     var userAltStart = '';
+    var reminder ='';
     // Set our collection
     console.log("useroneoff   "+ userOneoff);
     console.log("userAlt    "+userAlt);
@@ -137,7 +141,8 @@ router.post('/addad', function(req, res) {
     // Submit to the DB
     collection.insert({
         "userid" : userName[0],
-        "username" : userName[1],        
+        "username" : userName[1],
+        "useremail" : userName[2],
         "adid" : userAd[0],
         "addesc" : userAd[1],
         "start": userStart,
@@ -145,7 +150,8 @@ router.post('/addad', function(req, res) {
         "oneoff": userOneoff,
         "alternate": userAlt,
         "oneoffdone": userOneoffDone,
-        "altstart": userAltStart
+        "altstart": userAltStart,
+        "reminder": reminder
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -213,4 +219,45 @@ router.get('/weeklyad', function(req, res) {
 });
 
 
+
+router.get('/sendmail/:id/:email', function(req, res) {
+    //res.render('index', { title: 'Express' });
+    console.log("ID = " + req.params.id);
+    console.log("Email = " + req.params.email);
+    var email = req.params.email;
+    var id = req.params.id;
+    /*var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'bhbhbh2002.one@gmail.com',
+        pass: 'xxx'
+      }
+    });*/
+    
+    const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'lav6hmaqow52elb3@ethereal.email',
+        pass: 'Dy9ca4xqebn6ajT2uT'
+    }
+    });
+    
+    var mailOptions = {
+      from: 'info@gujweekly.com',
+      to: email,
+      subject: 'Sending Email using Node.js',
+      text: 'Hello '+ id +', good afternoon! If you have any changes in your ad for this weeks issue of Gujarat Weekly, kindly send it to us by WEDNESDAY MORNING at the LATEST. Any ad changes received after Wednesday morning will appear in next weeks issue.  If you have no changes in your ad, please kindly disregard this email. Thank you for your understanding. Have a great week!'
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    res.redirect("/weeklyad");
+
+});
 module.exports = router;

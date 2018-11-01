@@ -19,8 +19,6 @@ block content
                         p Alternate
             tbody
                 each item in publist
-                    if (item.oneoff == 'on')
-                        .hello
                     tr
                         td
                             p #{item.addesc}    
@@ -32,3 +30,5 @@ block content
                             p #{item.oneoff} - #{item.oneoffdone}    
                         td 
                             p #{item.alternate} - #{item.altstart} 
+                            a(href="/sendmail/#{item.username}/#{item.useremail}")
+                                button(type="button") Send Reminder

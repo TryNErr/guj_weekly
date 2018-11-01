@@ -6,7 +6,7 @@ block content
         p Select Advertiser
         select(name='user', size='1')
             each item in userlist
-                option(value='#{item._id}AAAAA#{item.username}') #{item.username} - #{item.email} 
+                option(value='#{item._id}AAAAA#{item.username}AAAAA#{item.email}') #{item.username} - #{item.email} 
         a(href="/newuser")
             button(type="button") Create New Advertiser
         p Select Ad Type    
