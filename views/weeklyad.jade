@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    h1= Week "#{week)"
+    form#formAddUser(name="addad",method="post",action="/addad")
+        p Select Advertiser
+        select(name='user', size='1')
+            each item in userlist
+                option(value='#{item._id}') #{item.username} - #{item.email} 
+        a(href="/newuser")
+            button(type="button") Create New Advertiser
+        p Select Ad Type    
+        select(name='ad', size='1')
+            each item in adlist
+                option(value='#{item._id}') #{item.size} - #{item.duration} - $ #{item.price}
+        p   Start From:  
+        input#inputUserStart(type="date", placeholder="userstart", name="userstart")
+        p   End Date:
+        input#inputUserEnd(type="date", placeholder="userend", name="userend")
+        p 
+        input#inputUserOneoff(type="checkbox", placeholder="useroneoff", name="useroneoff" ) 
+        Is User OneOff?
+        p
+        input#inputUserAlternate(type="checkbox", placeholder="useralternate", name="useralternate")
+        Does User want alternate week ad?
+        p
+        button#btnSubmit(type="submit") submit

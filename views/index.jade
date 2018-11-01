@@ -3,3 +3,13 @@ extends layout
 block content
     h1= title
     p Welcome to #{title}
+    
+    p
+        a(href="/newuser")
+            button(type="button") Create New Post
+    p
+        a(href="/newad")
+            button(type="button") Create New Ad
+    p
+        a(href="/userlist")
+            button(type="button") View All Users
