@@ -1,0 +1,10 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        script(type='text/javascript').
+          function required() { if (document.getElementById("inputUserEnd").value == "") { alert ("As you are updating advertiser, you need to enter new end date value."); return false; } else return true; }
+
+    body
+        block content

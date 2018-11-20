@@ -17,6 +17,8 @@ block content
                         p OneOff
                     th
                         p Alternate
+                    th
+                        p Edit
             tbody
                 each item in publist
                     tr
@@ -32,3 +34,6 @@ block content
                             p #{item.alternate} - #{item.altstart} 
                             a(href="/sendmail/#{item.username}/#{item.useremail}")
                                 button(type="button") Send Reminder
+                        td 
+                            a(href="/updad/#{item._id }")
+                                button(type="button") Edit Advertiser

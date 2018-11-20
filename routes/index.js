@@ -180,7 +180,13 @@ function getWeek (userStart) {
 }
 
 
-router.get('/weeklyad', function(req, res) {
+router.get('/weeklyad/:id', function(req, res) {
+    console.log("ID = " + req.params.id);
+    var id = req.params.id;
+    var wk = Number(getWeek(new Date())) + +id;
+
+    if (id === undefined)
+        id =0;
     var db = req.db;
     var doc1 = [];
     var collection = db.get('usercollection');
@@ -192,14 +198,13 @@ router.get('/weeklyad', function(req, res) {
        doc1 = docs;
         collection1.find({},{},function(e,docs1){
             doc2 = docs1;
-            var wk = Number(getWeek(new Date()));
             var wkoddeven = Number(wk % 2);
             console.log("Week" + wk);
             collection2.find(
                 {$or:[
                     { $and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {oneoff :{ $ne : "on"}},{alternate :{ $ne : "on"}}  ] },
-                    { $and: [  {oneoff :{ $eq : "on"}},{oneoffdone :{ $eq : Number(getWeek(new Date())) }} ] },
-                    { $and: [ {end : { $gte : new Date()}}, {alternate :{ $eq : "on"}},{ altstart :{ $eq : Number((getWeek(new Date()))%2)}} ] }
+                    { $and: [  {oneoff :{ $eq : "on"}},{oneoffdone :{ $eq : Number(getWeek(new Date())+ +id) }} ] },
+                    { $and: [ {end : { $gte : new Date()}}, {alternate :{ $eq : "on"}},{ altstart :{ $eq : (Number((getWeek(new Date())+ +id))%2)}} ] }
                 ]}
                /*$and: [ {start : { $lte : new Date()}} ,{end : { $gte : new Date()}}, {oneoff :{ $eq : "on" }}, {oneoffdone : { $eq : Number(getWeek(new Date())) }} ] }*/
                 ,{},function(e,docs2){
@@ -213,7 +218,7 @@ router.get('/weeklyad', function(req, res) {
     function callresponse() {
 //    res.render('userlist');
 
-       res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3, 'week': getWeek(new Date())        });
+       res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3, 'week': wk      });
     }
 
 });
@@ -257,7 +262,57 @@ router.get('/sendmail/:id/:email', function(req, res) {
         console.log('Email sent: ' + info.response);
       }
     });
-    res.redirect("/weeklyad");
+    res.redirect("/weeklyad/0");
 
 });
+
+router.get('/updad/:id', function(req, res) {
+    //res.render('index', { title: 'Express' });
+    console.log("ID = " + req.params.id);
+    var id = req.params.id;
+
+    if (id === undefined)
+        id =0;
+    var db = req.db;
+    var doc1 = [];
+    var collection = db.get('pubcollection');
+        collection.find({_id: id},{},function(e,docs){
+            doc1 = docs;
+            res.render('updatead', {            'publist': doc1     });
+            });
+
+
+});
+
+/* Updating Ad */
+router.post('/updatead1', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    console.log("USER " + req.body.id);
+    var userEnd = new Date(req.body.userend);
+    var id = req.body.id;
+    // Set our collection
+
+    var collection = db.get('pubcollection');
+
+    // Submit to the DB
+    collection.update(
+        {"_id":id},{ $set :{"end":userEnd}
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // If it worked, set the header so the address bar doesn't still say /adduser
+            //res.location("userlist");
+            // And forward to success page
+            res.redirect("weeklyad/0");
+        }
+    });
+});
+
 module.exports = router;
