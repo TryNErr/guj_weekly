@@ -194,6 +194,39 @@ router.get('/weeklyad/:id', function(req, res) {
     var collection1 = db.get('adcollection');
     var doc3 = [];
     var collection2 = db.get('pubcollection');
+    
+    /*collection2.aggregate([
+            { "$addFields": {
+                "start": {
+                    "$toDate": "$start"
+                }
+            } }
+        ]);*/
+    
+    /*collection2.update({
+        query: { oneoff: "off" },
+        update: { $set :{"end":el.end, "start":el.start }},
+        upsert: true
+    });
+    collection2.find({},{},function(e,el){
+            el.start = new Date(el.start);
+            el.end = new Date(el.end);
+            collection2.update(
+                {"_id":el.id},{ $set :{"end":el.end, "start":el.start}
+            }, function (err, doc) {
+                if (err) {
+                    // If it failed, return error
+                    res.send("There was a problem adding the information to the database.");
+                }
+                else {
+                    // If it worked, set the header so the address bar doesn't still say /adduser
+                    //res.location("userlist");
+                    // And forward to success page
+                    res.redirect("weeklyad/0");
+                }
+            });
+
+    }); */
     collection.find({},{},function(e,docs){
        doc1 = docs;
         collection1.find({},{},function(e,docs1){
@@ -217,7 +250,16 @@ router.get('/weeklyad/:id', function(req, res) {
 
     function callresponse() {
 //    res.render('userlist');
-
+       //console.log(doc3);
+       
+        for(var i=0; i<doc3.length; i++){
+            console.log ( "i =="+ i+ "    o=" + new Date(doc3[i].end) + "     n=" + (new Date() + 36000000000) + "        " + (new Date(doc3[i].end) - new Date()) );
+            if (new Date(doc3[i].end) - (new Date()) < 3345938052)
+                doc3[i].reminder = 'Y';
+            else
+                doc3[i].reminder = 'N';
+        }
+       
        res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3, 'week': wk      });
     }
 
