@@ -29,11 +29,12 @@ block content
                         td 
                             p #{item.start} - #{item.end}    
                         td 
-                            p #{item.oneoff} - #{item.oneoffdone}    
+                            p #{item.oneoff} - #{item.oneoffdone}  - #{item.reminder}  
                         td 
-                            p #{item.alternate} - #{item.altstart} 
-                            a(href="/sendmail/#{item.username}/#{item.useremail}")
-                                button(type="button") Send Reminder
+                            if(item.reminder == 'Y')
+                                p #{item.alternate} - #{item.altstart} 
+                                a(href="/sendmail/#{item.username}/#{item.useremail}")
+                                    button(type="button") Send Reminder
                         td 
                             a(href="/updad/#{item._id }")
                                 button(type="button") Edit Advertiser
