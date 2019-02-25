@@ -27,12 +27,12 @@ block content
                         td 
                             p #{item.username}   
                         td 
-                            p #{item.start} - #{item.end}    
+                            p #{item.start} TO #{item.end}    
                         td 
-                            p #{item.oneoff} - #{item.oneoffdone}  - #{item.reminder}  
+                            if(item.oneoff == 'on')
+                                p #{item.oneoff} - #{item.oneoffdone}  - #{item.reminder}  
                         td 
                             if(item.reminder == 'Y')
-                                p #{item.alternate} - #{item.altstart} 
                                 a(href="/sendmail/#{item.username}/#{item.useremail}")
                                     button(type="button") Send Reminder
                         td 
