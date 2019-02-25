@@ -251,13 +251,17 @@ router.get('/weeklyad/:id', function(req, res) {
     function callresponse() {
 //    res.render('userlist');
        //console.log(doc3);
-       
+       var date;
         for(var i=0; i<doc3.length; i++){
             console.log ( "i =="+ i+ "    o=" + new Date(doc3[i].end) + "     n=" + (new Date() + 36000000000) + "        " + (new Date(doc3[i].end) - new Date()) );
             if (new Date(doc3[i].end) - (new Date()) < 3345938052)
                 doc3[i].reminder = 'Y';
             else
                 doc3[i].reminder = 'N';
+            date = doc3[i].end;
+            doc3[i].end =   date.getDate()+'/' + (date.getMonth()+1) + '/'+date.getFullYear();
+            date = doc3[i].start;
+            doc3[i].start =   date.getDate()+'/' + (date.getMonth()+1) + '/'+date.getFullYear();
         }
        
        res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3, 'week': wk      });
@@ -293,7 +297,7 @@ router.get('/sendmail/:id/:email', function(req, res) {
     var mailOptions = {
       from: 'info@gujweekly.com',
       to: email,
-      subject: 'Sending Email using Node.js',
+      subject: 'Weekly Ad Reminder',
       text: 'Hello '+ id +', good afternoon! If you have any changes in your ad for this weeks issue of Gujarat Weekly, kindly send it to us by WEDNESDAY MORNING at the LATEST. Any ad changes received after Wednesday morning will appear in next weeks issue.  If you have no changes in your ad, please kindly disregard this email. Thank you for your understanding. Have a great week!'
     };
     
