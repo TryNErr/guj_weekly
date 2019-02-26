@@ -32,9 +32,25 @@ block content
                             if(item.oneoff == 'on')
                                 p #{item.oneoff} - #{item.oneoffdone}  - #{item.reminder}  
                         td 
+                            form#myform(onsubmit="emailjs.sendForm('default_service', 'template_CrZ7QqYX', this); return false;", method='post')
+                                input(type='hidden', name='reply_to', value='ishathaker@hotmail.com')
+                                input(type='hidden', name='from_name', value='GW')
+                                input(type='hidden', name='to_name', value='#{item.username}')
+                                input(type='hidden', name='message_html')
+                                button Weekly Reminder
                             if(item.reminder == 'Y')
-                                a(href="/sendmail/#{item.username}/#{item.useremail}")
-                                    button(type="button") Send Reminder
+                                form#myform1(onsubmit="emailjs.sendForm('default_service', 'template_CrZ7QqYY', this); return false;", method='post')
+                                    input(type='hidden', name='reply_to', value='ishathaker@hotmail.com')
+                                    input(type='hidden', name='from_name', value='GW')
+                                    input(type='hidden', name='to_name', value='#{item.username}')
+                                    input(type='hidden', name='message_html')
+                                    button Ad Expiration Reminder
+                                script(type='text/javascript', src='https://cdn.emailjs.com/sdk/2.3.2/email.min.js')
+                                script(type='text/javascript').
+                                    (function() {
+                                    emailjs.init("user_NxHm5p3WHBp3OtNnilZaM");
+                                    })();
+
                         td 
                             a(href="/updad/#{item._id }")
                                 button(type="button") Edit Advertiser
