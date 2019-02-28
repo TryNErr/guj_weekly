@@ -179,11 +179,22 @@ function getWeek (userStart) {
                         - 3 + (week1.getDay() + 6) % 7) / 7);
 }
 
+function getNextDayOfWeek(date, dayOfWeek) {
+    // Code to check that date and dayOfWeek are valid left as an exercise ;)
+   var resultDate = new Date(date.getTime());
+    resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
+    return resultDate;
+}
 
 router.get('/weeklyad/:id', function(req, res) {
     console.log("ID = " + req.params.id);
     var id = req.params.id;
     var wk = Number(getWeek(new Date())) + +id;
+    var iss = 194 + wk;
+
+    var wk1 = getNextDayOfWeek(new Date(), 5);
+    var wk11;
+    wk11 =   wk1.getDate()+'/' + (wk1.getMonth()+1) + '/'+wk1.getFullYear();
 
     if (id === undefined)
         id =0;
@@ -254,7 +265,7 @@ router.get('/weeklyad/:id', function(req, res) {
        var date;
         for(var i=0; i<doc3.length; i++){
             console.log ( "i =="+ i+ "    o=" + new Date(doc3[i].end) + "     n=" + (new Date() + 36000000000) + "        " + (new Date(doc3[i].end) - new Date()) );
-            if (new Date(doc3[i].end) - (new Date()) < 3345938052)
+            if ((new Date(doc3[i].end) - (new Date()) < 599220582 * 1.9) || ( doc3.alternate == 'yes' && (new Date(doc3[i].end) - (new Date()) < 599220582 * 2.9)))
                 doc3[i].reminder = 'Y';
             else
                 doc3[i].reminder = 'N';
@@ -264,7 +275,7 @@ router.get('/weeklyad/:id', function(req, res) {
             doc3[i].start =   date.getDate()+'/' + (date.getMonth()+1) + '/'+date.getFullYear();
         }
        
-       res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3, 'week': wk      });
+       res.render('adlist', {            "userlist" : doc1, "adlist" : doc2, 'publist': doc3, 'week': wk, 'wk11': wk11, 'iss': iss      });
     }
 
 });

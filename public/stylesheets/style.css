@@ -59,3 +59,13 @@ table.gradienttable td p{
 .hello{
       color: blue;
 }
+
+.hi{
+      margin:10px;
+      padding:8px;
+      border-top: 1px solid #fcfdec;
+      border-bottom:0px;
+      border-left: 1px solid #fcfdec;;
+      border-right:0px;
+      background-color: lightgrey;
+      }
