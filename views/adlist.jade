@@ -1,8 +1,8 @@
 extends layout
 
 block content
-    h1.
-        Advertisement List - Week #{week)
+    h1      Advertisement List
+    h2      For the Week of #{wk11) -  Issue No.# { #{iss} } - Week No. #{week} 
     div
         table.gradienttable
             thead
@@ -51,7 +51,8 @@ block content
                                     (function() {
                                     emailjs.init("user_NxHm5p3WHBp3OtNnilZaM");
                                     })();
-
+                            if(item.alternate == 'yes')
+                                p   Alternate Week Ad
                         td 
                             a(href="/updad/#{item._id }")
                                 button(type="button") Edit Advertiser

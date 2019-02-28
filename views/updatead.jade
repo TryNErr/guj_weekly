@@ -1,16 +1,19 @@
 extends layout1
 
 block content
-    h1= title
     form#formAddUser(name="addad",method="post",action="/updatead1",onsubmit="return required()")
         each item in publist 
-            p Advertiser            ---------------#{item.username}  
-            p Ad Type               ---------------#{item.addesc}
-            p   Start From:         ---------------#{item.start}
-            p   OLD End Date:       ---------------#{item.end}
-            p   Select New End Date:
-                input#inputUserEnd(type="date", placeholder="userend", name="userend")
-            p   ID:
-                input#inputId(type="text", placeholder="id", name="id", value="#{item._id}")
-            p
+            h1 Update End Date for Advertiser ::"#{item.username}"
+            p.hi    Advertiser            ---------------#{item.username}  
+            p.hi    Ad Type               ---------------#{item.addesc}
+            p.hi    Start From:         ---------------#{item.start}
+            p.hi    OLD End Date:       ---------------#{item.end}
+            p.hi   Select New End Date:
+                        input#inputUserEnd(type="date", placeholder="userend", name="userend")
+            p.hi    ID:
+                        input#inputId(type="text", placeholder="id", name="id", value="#{item._id}")
+            p.hi
                 button#btnSubmit(type="submit") submit
+        p
+            a(href="/weeklyad/0")
+                button(type="button") Go Back
