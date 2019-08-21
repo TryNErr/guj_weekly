@@ -332,11 +332,16 @@ router.get('/updad/:id', function(req, res) {
         id =0;
     var db = req.db;
     var doc1 = [];
+    var doc2 = [];
     var collection = db.get('pubcollection');
         collection.find({_id: id},{},function(e,docs){
             doc1 = docs;
-            res.render('updatead', {            'publist': doc1     });
             });
+    var collection1 = db.get('adcollection');
+        collection.find({},{},function(e,docs){
+            doc2 = docs;
+            });
+            res.render('updatead', {            'publist': doc1, 'adlist': doc2     });
 
 
 });
