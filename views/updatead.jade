@@ -2,10 +2,14 @@ extends layout1
 
 block content
     form#formAddUser(name="addad",method="post",action="/updatead1",onsubmit="return required()")
-        each item in publist 
+        each item in publist
             h1 Update End Date for Advertiser ::"#{item.username}"
-            p.hi    Advertiser            ---------------#{item.username}  
+            p.hi    Advertiser            ---------------#{item.username}
             p.hi    Ad Type               ---------------#{item.addesc}
+            p.hi   Select Ad Type
+                select(name='ad', size='1')
+                    each item in adlist
+                        option(value='#{item._id}AAAAA#{item.size} - #{item.duration} -#{item.price}') #{item.size} - #{item.duration} - $ #{item.price}
             p.hi    Start From:         ---------------#{item.start}
             p.hi    OLD End Date:       ---------------#{item.end}
             p.hi   Select New End Date:
