@@ -1,0 +1,5 @@
+_id,userid,username,useremail,adid,addesc,start,end,oneoff,alternate,oneoffdone,altstart,reminder
+ObjectId(5bd999f3e9f2b00756d3669f),5bc99a4cb3190d1f616f7f95,Hardik,hj@hj.com,5bc9adfefb6fc06027495ad2,Full Page Colour - 4 Weeks (price per insertion) -250,2018-10-01T00:00:00.000Z,2018-11-20T00:00:00.000Z,off,off,,,
+ObjectId(5bda6f7e66c75505d98b5567),5bda6f5866c75505d98b5566,JJ,jj@joshi.com,5bd9ad41441e65a84a4ee69d,Full Page Colour - 13 Weeks (price per insertion) -220,2018-10-28T00:00:00.000Z,2019-01-31T00:00:00.000Z,off,on,,1,
+ObjectId(5bf3fa850e69f807877ff923),5bd9aeb7a3caf207f34dcd00,Hardik,hj@hj.com,5bd9ad41441e65a84a4ee69c,1/2 Page B/W - 4 Weeks (price per insertion) -95,2018-11-01T00:00:00.000Z,2019-01-11T00:00:00.000Z,off,off,,,
+ObjectId(5c693c98296d9300169d868d),5bd9aeb7a3caf207f34dcd00,Hardik,hj@hj.com,5bd9ad41441e65a84a4ee6ac,Junior Page Colour - 4 Weeks (price per insertion) -175,2019-01-18T00:00:00.000Z,2019-03-28T00:00:00.000Z,on,on,3,1,
